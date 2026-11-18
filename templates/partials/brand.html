@@ -1,0 +1,5 @@
+{% load static %}
+<a class="brand-lockup{% if brand_class %} {{ brand_class }}{% endif %}" href="{{ brand_href }}" aria-label="PWDigital home">
+  <img class="brand-icon" src="{% static 'img/pwdigital-icon.svg' %}" alt="PWDigital logo" width="40" height="40">
+  {% if show_brand_name != False %}<span class="brand-name">PWDigital</span>{% endif %}
+</a>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="app-shell">
@@ -10,10 +11,8 @@
       <button class="menu-toggle" type="button" data-sidebar-toggle aria-expanded="false" aria-controls="app-sidebar" aria-label="Open navigation menu">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
-      <a class="brand-lockup mobile-brand" href="{% url 'accounts:dashboard_redirect' %}">
-        <span class="brand-mark">PW</span>
-        <span class="brand-name">PWDigital</span>
-      </a>
+      {% url 'accounts:dashboard_redirect' as brand_home_url %}
+      {% include "partials/brand.html" with brand_href=brand_home_url brand_class="mobile-brand" %}
       <span class="role-badge mobile-role-badge">{% block mobile_role %}{{ user.role.role_name|default:"Applicant" }}{% endblock %}</span>
     </header>
 
@@ -27,7 +26,10 @@
         <span class="role-badge">{% block page_role %}{{ user.role.role_name|default:"Applicant" }}{% endblock %}</span>
       </header>
       {% block app_content %}{% endblock %}
-      <footer class="app-footer">PWDigital · Account portal for digital PWD services</footer>
+      <footer class="app-footer">
+        <img src="{% static 'img/pwdigital-icon.svg' %}" alt="PWDigital logo" width="30" height="30">
+        <span>PWDigital · Account portal for digital PWD services</span>
+      </footer>
     </main>
   </div>
 </div>

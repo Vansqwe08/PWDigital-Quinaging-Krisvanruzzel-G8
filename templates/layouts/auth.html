@@ -1,12 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="auth-layout">
   <aside class="auth-brand-panel" aria-label="PWDigital">
-    <a class="brand-lockup" href="{% url 'accounts:login' %}" aria-label="PWDigital home">
-      <span class="brand-mark">PW</span>
-      <span class="brand-name">PWDigital</span>
-    </a>
+    {% url 'accounts:register' as brand_home_url %}
+    {% include "partials/brand.html" with brand_href=brand_home_url brand_class="auth-brand-lockup" %}
     <div class="auth-brand-copy">
       <p class="eyebrow">{% block auth_eyebrow %}PWDIGITAL ACCOUNT PORTAL{% endblock %}</p>
       <h1>{% block auth_headline %}Your account, all in one place.{% endblock %}</h1>
@@ -16,7 +15,10 @@
       </ul>
     </div>
     {% block auth_extra %}{% endblock %}
-    <p class="auth-brand-footer">PWDigital account portal</p>
+    <p class="auth-brand-footer">
+      <img src="{% static 'img/pwdigital-icon.svg' %}" alt="PWDigital logo" width="30" height="30">
+      <span>PWDigital account portal</span>
+    </p>
     <span class="auth-decoration auth-decoration-filled" aria-hidden="true"></span>
     <span class="auth-decoration auth-decoration-outlined" aria-hidden="true"></span>
   </aside>
@@ -27,6 +29,7 @@
     </div>
     <div class="auth-form-inner">
       {% include "partials/messages.html" %}
+      <img class="auth-form-logo" src="{% static 'img/pwdigital-icon.svg' %}" alt="PWDigital logo" width="80" height="80">
       <p class="eyebrow auth-form-eyebrow">{% block form_eyebrow %}ACCOUNT ACCESS{% endblock %}</p>
       <h2>{% block form_title %}{% endblock %}</h2>
       <p class="auth-form-subtitle">{% block form_subtitle %}{% endblock %}</p>

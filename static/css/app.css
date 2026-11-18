@@ -140,23 +140,17 @@ h3 {
   color: var(--text);
 }
 
-.brand-mark {
-  display: inline-grid;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  place-items: center;
-  border-radius: 12px;
-  background: var(--primary);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: -.04em;
+.brand-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  object-fit: contain;
 }
 
 .brand-name {
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -.04em;
 }
 
@@ -245,9 +239,29 @@ h3 {
 }
 
 .auth-brand-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0;
   color: var(--text-muted);
   font-size: 12px;
+}
+
+.auth-brand-footer img,
+.app-footer img {
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  object-fit: contain;
+}
+
+.auth-form-logo {
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  object-fit: contain;
 }
 
 .auth-note {
@@ -784,6 +798,9 @@ h3 {
 }
 
 .app-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 42px;
   padding-top: 18px;
   border-top: 1px solid var(--border);
@@ -821,12 +838,10 @@ h3 {
   gap: 8px;
 }
 
-.mobile-brand .brand-mark {
+.mobile-brand .brand-icon {
   width: 36px;
   height: 36px;
   flex-basis: 36px;
-  border-radius: 10px;
-  font-size: 12px;
 }
 
 .mobile-brand .brand-name {
@@ -1237,9 +1252,13 @@ h3 {
     font-size: 12px;
   }
 
-  .auth-brand-footer,
   .auth-decoration {
     display: none;
+  }
+
+  .auth-brand-footer {
+    display: flex;
+    margin-top: 16px;
   }
 
   .auth-form-panel {
@@ -1377,10 +1396,10 @@ h3 {
     font-size: 14px;
   }
 
-  .mobile-brand .brand-mark {
-    width: 33px;
-    height: 33px;
-    flex-basis: 33px;
+  .mobile-brand .brand-icon {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
   }
 
   .app-content {

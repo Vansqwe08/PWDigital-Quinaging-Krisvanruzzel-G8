@@ -1,9 +1,7 @@
 {% with current_route=request.resolver_match.url_name current_namespace=request.resolver_match.namespace %}
 <aside class="app-sidebar" id="app-sidebar" aria-label="Account navigation">
-  <a class="brand-lockup sidebar-brand" href="{% url 'accounts:dashboard_redirect' %}">
-    <span class="brand-mark">PW</span>
-    <span class="brand-name">PWDigital</span>
-  </a>
+  {% url 'accounts:dashboard_redirect' as brand_home_url %}
+  {% include "partials/brand.html" with brand_href=brand_home_url brand_class="sidebar-brand" %}
 
   <p class="sidebar-section-label">Workspace</p>
   <nav class="sidebar-nav" aria-label="Main navigation">
