@@ -1,35 +1,22 @@
-{% extends "base.html" %}
-{% block title %}Login | PWDigital{% endblock %}
-{% block content %}
-<section class="auth-layout">
-    <div class="auth-intro">
-        <p class="portal-kicker">PWDigital portal</p>
-        <h1>Your PWDigital account, in one place.</h1>
-        <p>Sign in to manage your account and profile. Application and verification features are planned for later phases.</p>
-        <ul class="trust-list" aria-label="Portal features">
-            <li><span class="trust-check" aria-hidden="true">&#10003;</span>One account for your portal</li>
-            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Manage your profile securely</li>
-            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Tools tailored to your role</li>
-        </ul>
-    </div>
-    <div class="card auth-card">
-        <h2>Welcome back</h2>
-        <p class="muted">Sign in to continue to your account.</p>
-        <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
-                </div>
-            {% endfor %}
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}<div class="field-error" role="alert">{{ error }}</div>{% endfor %}
-            {% endif %}
-            <button class="button button-primary button-full" type="submit">Login</button>
-        </form>
-        <p class="auth-link">No account yet? <a href="{% url 'accounts:register' %}">Register</a></p>
-    </div>
-</section>
+{% extends "layouts/auth.html" %}
+{% block title %}Log in | PWDigital{% endblock %}
+{% block auth_eyebrow %}PWDIGITAL PORTAL{% endblock %}
+{% block auth_headline %}Your account, all in one place.{% endblock %}
+{% block auth_description %}Sign in to manage your account and profile. Application and verification features are planned for later phases.{% endblock %}
+{% block auth_checklist %}
+  <li><span class="benefit-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span><span>Update your contact details</span></li>
+  <li><span class="benefit-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span><span>Manage your profile photo</span></li>
+  <li><span class="benefit-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span><span>Access the portal for your role</span></li>
+{% endblock %}
+{% block auth_prompt %}New to PWDigital? <a href="{% url 'accounts:register' %}">Create an applicant account</a>{% endblock %}
+{% block form_title %}Welcome back{% endblock %}
+{% block form_subtitle %}Enter your login details to continue.{% endblock %}
+{% block auth_form %}
+  <form method="post" class="auth-form" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+      {% include "partials/form_field.html" with field=field %}
+    {% endfor %}
+    <button class="button button-primary button-full" type="submit">Log in</button>
+  </form>
 {% endblock %}

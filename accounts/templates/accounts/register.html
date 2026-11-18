@@ -1,41 +1,37 @@
-{% extends "base.html" %}
-{% block title %}Register | PWDigital{% endblock %}
-{% block content %}
-<section class="auth-layout">
-    <div class="auth-intro">
-        <p class="portal-kicker">Get started</p>
-        <h1>Create your PWDigital account.</h1>
-        <p>Create an applicant account to manage your contact details and profile photo.</p>
-        <ul class="trust-list" aria-label="Registration information">
-            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Registration is for applicants</li>
-            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Your profile stays in your control</li>
-            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Use a unique, secure password</li>
-        </ul>
+{% extends "layouts/auth.html" %}
+{% block title %}Create account | PWDigital{% endblock %}
+{% block auth_eyebrow %}GET STARTED{% endblock %}
+{% block auth_headline %}Create your PWDigital account.{% endblock %}
+{% block auth_description %}Applicant accounts can manage their contact details and profile photo through this portal.{% endblock %}
+{% block auth_checklist %}
+  <li><span class="benefit-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span><span>Registration is for applicants</span></li>
+  <li><span class="benefit-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span><span>Use an email address you can access</span></li>
+  <li><span class="benefit-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span><span>Choose a password that meets the listed requirements</span></li>
+{% endblock %}
+{% block auth_extra %}<p class="auth-note">Your account is created with the Applicant role.</p>{% endblock %}
+{% block auth_prompt %}Already registered? <a href="{% url 'accounts:login' %}">Log in</a>{% endblock %}
+{% block form_eyebrow %}APPLICANT ACCOUNT{% endblock %}
+{% block form_title %}Create an account{% endblock %}
+{% block form_subtitle %}Complete the form to register as an applicant.{% endblock %}
+{% block auth_form %}
+  <form method="post" class="auth-form" novalidate>
+    {% csrf_token %}
+    <div class="auth-fields-grid">
+      {% for field in form %}
+        {% if field.name == "username" %}
+          {% include "partials/form_field.html" with field=field field_class="field-full" %}
+        {% elif field.name == "first_name" or field.name == "last_name" %}
+          {% include "partials/form_field.html" with field=field required_override=True %}
+        {% else %}
+          {% include "partials/form_field.html" with field=field %}
+        {% endif %}
+      {% endfor %}
     </div>
-    <div class="card auth-card">
-        <h2>Create an account</h2>
-        <p class="muted">Enter your details to register as an applicant.</p>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.name == "password1" %}
-                        <p class="form-help">Use at least 8 characters. Common passwords and passwords similar to your account details are not accepted.</p>
-                    {% endif %}
-                    {% if field.name == "password2" %}
-                        <p class="form-help">Enter the same password again to confirm it.</p>
-                    {% endif %}
-                    {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
-                </div>
-            {% endfor %}
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}<div class="field-error" role="alert">{{ error }}</div>{% endfor %}
-            {% endif %}
-            <button class="button button-primary button-full" type="submit">Create applicant account</button>
-        </form>
-        <p class="auth-link">Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
-    </div>
-</section>
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    <button class="button button-primary button-full" type="submit">Create applicant account</button>
+  </form>
 {% endblock %}

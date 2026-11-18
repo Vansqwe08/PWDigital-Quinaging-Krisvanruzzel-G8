@@ -1,23 +1,13 @@
-{% extends "base.html" %}
-{% block title %}LGU Dashboard | PWDigital{% endblock %}
-{% block content %}
-<section class="dashboard">
-    <header class="dashboard-header">
-        <div><p class="eyebrow">LGU / PDAO staff portal</p><h1>Welcome, {{ user.get_full_name|default:user.username }}</h1></div>
-        <span class="role-badge">LGU staff</span>
-    </header>
-    <div class="dashboard-grid">
-        <article class="card intro-card">
-            <p class="eyebrow">Staff workspace</p>
-            <h2>Application review</h2>
-            <p>Application review and management features will be added in a future development phase.</p>
-        </article>
-        <aside class="card dashboard-aside">
-            <h2>Feature availability</h2>
-            <p>Application review and management are not available in this phase.</p>
-            <span class="availability-badge availability-planned">Planned</span>
-            <a class="button button-outline" href="{% url 'accounts:profile' %}">Manage your profile</a>
-        </aside>
-    </div>
-</section>
+{% extends "layouts/app.html" %}
+{% block title %}LGU staff dashboard | PWDigital{% endblock %}
+{% block page_eyebrow %}LGU / PDAO STAFF PORTAL{% endblock %}
+{% block page_title %}Welcome, {{ user.get_full_name|default:user.username }}{% endblock %}
+{% block page_role %}LGU staff{% endblock %}
+{% block mobile_role %}LGU staff{% endblock %}
+{% block app_content %}
+  {% url 'accounts:profile' as profile_url %}
+  <section class="dashboard-cards-grid role-dashboard" aria-label="LGU staff dashboard">
+    {% include "partials/card.html" with card_class="role-feature-card" card_eyebrow="STAFF WORKSPACE" card_title="Application review" card_description="Application review and management features are planned for a future development phase." %}
+    {% include "partials/card.html" with card_class="role-availability-card" card_title="Feature availability" card_description="Application review and management are not available in this phase." card_status="Planned" card_status_class="status-planned" card_link_url=profile_url card_link_text="Manage your profile" %}
+  </section>
 {% endblock %}

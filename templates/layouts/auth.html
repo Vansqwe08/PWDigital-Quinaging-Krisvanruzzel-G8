@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-layout">
+  <aside class="auth-brand-panel" aria-label="PWDigital">
+    <a class="brand-lockup" href="{% url 'accounts:login' %}" aria-label="PWDigital home">
+      <span class="brand-mark">PW</span>
+      <span class="brand-name">PWDigital</span>
+    </a>
+    <div class="auth-brand-copy">
+      <p class="eyebrow">{% block auth_eyebrow %}PWDIGITAL ACCOUNT PORTAL{% endblock %}</p>
+      <h1>{% block auth_headline %}Your account, all in one place.{% endblock %}</h1>
+      <p class="auth-brand-description">{% block auth_description %}{% endblock %}</p>
+      <ul class="auth-benefits">
+        {% block auth_checklist %}{% endblock %}
+      </ul>
+    </div>
+    {% block auth_extra %}{% endblock %}
+    <p class="auth-brand-footer">PWDigital account portal</p>
+    <span class="auth-decoration auth-decoration-filled" aria-hidden="true"></span>
+    <span class="auth-decoration auth-decoration-outlined" aria-hidden="true"></span>
+  </aside>
+
+  <main class="auth-form-panel" id="main-content" tabindex="-1">
+    <div class="auth-topbar">
+      {% block auth_prompt %}{% endblock %}
+    </div>
+    <div class="auth-form-inner">
+      {% include "partials/messages.html" %}
+      <p class="eyebrow auth-form-eyebrow">{% block form_eyebrow %}ACCOUNT ACCESS{% endblock %}</p>
+      <h2>{% block form_title %}{% endblock %}</h2>
+      <p class="auth-form-subtitle">{% block form_subtitle %}{% endblock %}</p>
+      {% block auth_form %}{% endblock %}
+    </div>
+  </main>
+</div>
+{% endblock %}

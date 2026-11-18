@@ -1,0 +1,39 @@
+{% with current_route=request.resolver_match.url_name current_namespace=request.resolver_match.namespace %}
+<aside class="app-sidebar" id="app-sidebar" aria-label="Account navigation">
+  <a class="brand-lockup sidebar-brand" href="{% url 'accounts:dashboard_redirect' %}">
+    <span class="brand-mark">PW</span>
+    <span class="brand-name">PWDigital</span>
+  </a>
+
+  <p class="sidebar-section-label">Workspace</p>
+  <nav class="sidebar-nav" aria-label="Main navigation">
+    <a class="sidebar-link{% if current_namespace == 'dashboard' %} is-active{% endif %}"
+       href="{% url 'accounts:dashboard_redirect' %}"
+       {% if current_namespace == 'dashboard' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
+      <span>Dashboard</span>
+    </a>
+    <a class="sidebar-link{% if current_namespace == 'accounts' and current_route == 'profile' %} is-active{% endif %}"
+       href="{% url 'accounts:profile' %}"
+       {% if current_namespace == 'accounts' and current_route == 'profile' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+      <span>My profile</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-user">
+    <span class="user-avatar" aria-hidden="true">{{ user.get_full_name|default:user.username|first|upper }}</span>
+    <span class="sidebar-user-details">
+      <span class="sidebar-user-name">{{ user.get_full_name|default:user.username }}</span>
+      <span class="sidebar-user-role">{{ user.role.role_name|default:"Applicant" }}</span>
+    </span>
+  </div>
+  <form class="sidebar-logout" method="post" action="{% url 'accounts:logout' %}">
+    {% csrf_token %}
+    <button class="sidebar-link logout-link" type="submit">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5m5 5H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+      <span>Log out</span>
+    </button>
+  </form>
+</aside>
+{% endwith %}

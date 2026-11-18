@@ -1,23 +1,13 @@
-{% extends "base.html" %}
-{% block title %}Admin Dashboard | PWDigital{% endblock %}
-{% block content %}
-<section class="dashboard">
-    <header class="dashboard-header">
-        <div><p class="eyebrow">System administration</p><h1>Welcome, {{ user.get_full_name|default:user.username }}</h1></div>
-        <span class="role-badge">System administrator</span>
-    </header>
-    <div class="dashboard-grid">
-        <article class="card intro-card">
-            <p class="eyebrow">Administration workspace</p>
-            <h2>Account management</h2>
-            <p>Manage system accounts, roles, activation status, and user information.</p>
-        </article>
-        <aside class="card dashboard-aside">
-            <h2>Available now</h2>
-            <p>Use the administration site to manage registered user accounts and roles.</p>
-            <span class="availability-badge availability-active">Available</span>
-            <a class="button button-primary" href="{% url 'admin:index' %}">Open Django Admin</a>
-        </aside>
-    </div>
-</section>
+{% extends "layouts/app.html" %}
+{% block title %}Administrator dashboard | PWDigital{% endblock %}
+{% block page_eyebrow %}SYSTEM ADMINISTRATION{% endblock %}
+{% block page_title %}Welcome, {{ user.get_full_name|default:user.username }}{% endblock %}
+{% block page_role %}System administrator{% endblock %}
+{% block mobile_role %}Administrator{% endblock %}
+{% block app_content %}
+  {% url 'admin:index' as admin_url %}
+  <section class="dashboard-cards-grid role-dashboard" aria-label="Administrator dashboard">
+    {% include "partials/card.html" with card_class="role-feature-card" card_eyebrow="ADMINISTRATION WORKSPACE" card_title="Account management" card_description="Manage registered accounts, roles, activation status, and user information in the administration site." %}
+    {% include "partials/card.html" with card_class="role-availability-card" card_title="Available now" card_description="Open the administration site to manage system accounts and roles." card_status="Available" card_status_class="status-available" card_link_url=admin_url card_link_text="Open Django Admin" %}
+  </section>
 {% endblock %}

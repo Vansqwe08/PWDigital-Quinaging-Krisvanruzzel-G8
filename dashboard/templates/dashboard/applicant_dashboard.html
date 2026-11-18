@@ -1,29 +1,60 @@
-{% extends "base.html" %}
-{% block title %}Applicant Dashboard | PWDigital{% endblock %}
-{% block content %}
-<section class="dashboard">
-    <header class="dashboard-header">
-        <div><p class="eyebrow">Applicant portal</p><h1>Welcome, {{ user.get_full_name|default:user.username }}</h1></div>
-        <span class="role-badge">Applicant</span>
-    </header>
-    <div class="dashboard-grid">
-        <article class="card intro-card">
-            <p class="eyebrow">Your PWDigital account</p>
-            <h2>Your services start here.</h2>
-            <p>Account and profile management are available in this phase. PWD application submission and related services are not available yet.</p>
-        </article>
-        <aside class="card dashboard-aside">
-            <h2>Available in this phase</h2>
-            <ul class="feature-list">
-                <li>Update your contact details</li>
-                <li>Upload or change your profile photo</li>
-            </ul>
-            <a class="button button-primary" href="{% url 'accounts:profile' %}">Manage your profile</a>
-            <details class="capability-details">
-                <summary>What is coming later?</summary>
-                <p>PWD application submission and related services are not available in this phase.</p>
-            </details>
-        </aside>
+{% extends "layouts/app.html" %}
+{% block title %}Applicant dashboard | PWDigital{% endblock %}
+{% block page_eyebrow %}APPLICANT PORTAL{% endblock %}
+{% block page_title %}Welcome, {{ user.get_full_name|default:user.username }}{% endblock %}
+{% block page_role %}Applicant{% endblock %}
+{% block mobile_role %}Applicant{% endblock %}
+{% block app_content %}
+  <section class="applicant-dashboard" aria-label="Applicant dashboard">
+    <article class="welcome-hero">
+      <p class="eyebrow">Your account</p>
+      <h2>Your services start here.</h2>
+      <p>Account and profile management are available in this phase. PWD application submission and related services are not available yet.</p>
+      <a class="button button-light" href="{% url 'accounts:profile' %}">Manage your profile</a>
+    </article>
+
+    <div class="dashboard-cards-grid">
+      <section class="content-card progress-card" aria-labelledby="progress-title">
+        <div class="card-heading">
+          <p class="eyebrow">YOUR JOURNEY</p>
+          <h2 id="progress-title">Your progress</h2>
+        </div>
+        <ol class="progress-list">
+          <li class="progress-step is-complete">
+            <span class="progress-marker" aria-hidden="true">
+              <svg viewBox="0 0 20 20"><path d="m4.5 10 3.5 3.5 7.5-8"/></svg>
+            </span>
+            <span class="progress-copy"><strong>Account created</strong><span>Complete</span></span>
+          </li>
+          <li class="progress-step is-current">
+            <span class="progress-marker" aria-hidden="true">2</span>
+            <span class="progress-copy"><strong>Complete your profile</strong><span>Current step</span></span>
+          </li>
+          <li class="progress-step is-locked">
+            <span class="progress-marker" aria-hidden="true">
+              <svg viewBox="0 0 20 20"><rect x="4.5" y="8.5" width="11" height="8" rx="1.5"/><path d="M7 8.5V6a3 3 0 0 1 6 0v2.5"/></svg>
+            </span>
+            <span class="progress-copy"><strong>PWD application</strong><span>Coming in a later phase</span></span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="content-card available-card" aria-labelledby="available-title">
+        <div class="card-heading">
+          <p class="eyebrow">THIS PHASE</p>
+          <h2 id="available-title">Available in this phase</h2>
+        </div>
+        <ul class="available-list">
+          <li>
+            <span class="available-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span>
+            <span>Update your contact details</span>
+          </li>
+          <li>
+            <span class="available-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3.5 8 3 3 6-6"/></svg></span>
+            <span>Upload or change your profile photo</span>
+          </li>
+        </ul>
+      </section>
     </div>
-</section>
+  </section>
 {% endblock %}

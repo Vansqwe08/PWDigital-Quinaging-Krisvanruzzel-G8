@@ -1,0 +1,11 @@
+<article class="content-card{% if card_class %} {{ card_class }}{% endif %}">
+  {% if card_eyebrow %}<p class="eyebrow">{{ card_eyebrow }}</p>{% endif %}
+  <h2>{{ card_title }}</h2>
+  {% if card_description %}<p class="card-description">{{ card_description }}</p>{% endif %}
+  {% if card_status %}
+    <span class="status-badge{% if card_status_class %} {{ card_status_class }}{% endif %}">{{ card_status }}</span>
+  {% endif %}
+  {% if card_link_url %}
+    <a class="text-link card-link" href="{{ card_link_url }}">{{ card_link_text }}</a>
+  {% endif %}
+</article>

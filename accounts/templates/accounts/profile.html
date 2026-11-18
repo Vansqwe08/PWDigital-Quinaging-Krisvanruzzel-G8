@@ -1,39 +1,60 @@
-{% extends "base.html" %}
-{% block title %}My Profile | PWDigital{% endblock %}
-{% block content %}
-<section class="profile-layout">
-    <aside class="card profile-summary" data-avatar-initial="{{ user.first_name|first|default:'U' }}">
+{% extends "layouts/app.html" %}
+{% block title %}My profile | PWDigital{% endblock %}
+{% block page_eyebrow %}ACCOUNT SETTINGS{% endblock %}
+{% block page_title %}My profile{% endblock %}
+{% block app_content %}
+  <section class="profile-layout" aria-label="Profile details and settings">
+    <article class="content-card profile-summary-card">
+      <div class="profile-summary">
         {% if user.profile_photo %}
-            <img class="profile-photo" src="{{ user.profile_photo.url }}" alt="Profile photo">
+          <img class="profile-avatar" src="{{ user.profile_photo.url }}" alt="Profile photo for {{ user.get_full_name|default:user.username }}">
         {% else %}
-            <div class="profile-photo placeholder">{{ user.first_name|first|default:"U" }}</div>
+          <span class="profile-avatar profile-avatar-initial" role="img" aria-label="Profile initial">{{ user.first_name|first|default:"U"|upper }}</span>
         {% endif %}
-        <h1>{{ user.get_full_name|default:user.username }}</h1>
-        <span class="role-badge">{{ user.role.role_name }}</span>
-        <dl>
-            <dt>Username</dt><dd>{{ user.username }}</dd>
-            <dt>Email address</dt><dd>{{ user.email }}</dd>
-            <dt>Member since</dt><dd>{{ user.created_at|date:"F j, Y" }}</dd>
-        </dl>
-    </aside>
-    <div class="card profile-form-card">
+        <div class="profile-identity">
+          <h2>{{ user.get_full_name|default:user.username }}</h2>
+          <p class="profile-username">@{{ user.username }}</p>
+        </div>
+      </div>
+      <dl class="profile-details">
+        <div>
+          <dt>Email address</dt>
+          <dd>{{ user.email }}</dd>
+        </div>
+        <div>
+          <dt>Member since</dt>
+          <dd>{{ user.created_at|date:"F j, Y" }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="content-card profile-form-card">
+      <div class="card-heading">
+        <p class="eyebrow">PERSONAL DETAILS</p>
         <h2>Personal information</h2>
-        <p>Keep your contact details up to date.</p>
-        <form method="post" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.help_text %}<p class="form-help" id="help-{{ field.id_for_label }}">{{ field.help_text }}</p>{% endif %}
-                    {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
-                </div>
-            {% endfor %}
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}<div class="field-error" role="alert">{{ error }}</div>{% endfor %}
+        <p class="card-description">Update the contact details associated with your account.</p>
+      </div>
+      <form method="post" enctype="multipart/form-data" class="profile-form" novalidate>
+        {% csrf_token %}
+        <div class="profile-fields-grid">
+          {% for field in form %}
+            {% if field.name == "profile_photo" %}
+              {% include "partials/form_field.html" with field=field field_class="field-full" %}
+            {% else %}
+              {% include "partials/form_field.html" with field=field %}
             {% endif %}
-            <button class="button button-primary" type="submit">Save changes</button>
-        </form>
-    </div>
-</section>
+          {% endfor %}
+        </div>
+        {% if form.non_field_errors %}
+          <div class="form-errors" role="alert">
+            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+          </div>
+        {% endif %}
+        <div class="form-actions">
+          <button class="button button-primary" type="submit">Save changes</button>
+          <a class="button button-secondary" href="{% url 'accounts:dashboard_redirect' %}">Cancel</a>
+        </div>
+      </form>
+    </article>
+  </section>
 {% endblock %}

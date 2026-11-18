@@ -8,7 +8,33 @@ from PIL import Image
 from .models import User
 
 
-class RegistrationForm(forms.ModelForm):
+class BootstrapFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            widget = field.widget
+            if isinstance(widget, forms.Select):
+                bootstrap_class = "form-select"
+            elif isinstance(widget, forms.CheckboxInput):
+                bootstrap_class = "form-check-input"
+            else:
+                bootstrap_class = "form-control"
+
+            classes = widget.attrs.get("class", "").split()
+            if bootstrap_class not in classes:
+                classes.append(bootstrap_class)
+            widget.attrs["class"] = " ".join(classes)
+
+            if field.help_text:
+                help_id = f"help-{self[name].id_for_label}"
+                described_by = widget.attrs.get("aria-describedby", "").split()
+                if help_id not in described_by:
+                    described_by.append(help_id)
+                widget.attrs["aria-describedby"] = " ".join(described_by)
+
+
+class RegistrationForm(BootstrapFormMixin, forms.ModelForm):
     password1 = forms.CharField(
         label="Password",
         strip=False,
@@ -67,7 +93,7 @@ class RegistrationForm(forms.ModelForm):
         return password2
 
 
-class UserLoginForm(AuthenticationForm):
+class UserLoginForm(BootstrapFormMixin, AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(attrs={"autofocus": True, "autocomplete": "username"})
     )
@@ -77,7 +103,7 @@ class UserLoginForm(AuthenticationForm):
     )
 
 
-class ProfileForm(forms.ModelForm):
+class ProfileForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "mobile_number", "profile_photo")
@@ -89,10 +115,7 @@ class ProfileForm(forms.ModelForm):
                 attrs={"autocomplete": "tel", "inputmode": "tel"}
             ),
             "profile_photo": forms.ClearableFileInput(
-                attrs={
-                    "accept": "image/*",
-                    "aria-describedby": "help-id_profile_photo",
-                }
+                attrs={"accept": "image/*"}
             ),
         }
         help_texts = {

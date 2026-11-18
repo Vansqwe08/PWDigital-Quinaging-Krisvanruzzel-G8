@@ -28,6 +28,15 @@ class AccountTestMixin:
 
 
 class RegistrationTests(AccountTestMixin, TestCase):
+    def test_invalid_registration_renders_styled_fields_and_inline_errors(self):
+        response = self.client.post(reverse("accounts:register"), {})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'class="form-control"')
+        self.assertContains(response, 'class="form-field has-error"')
+        self.assertContains(response, 'class="field-errors"')
+        self.assertContains(response, "/static/css/app.css")
+
     def test_valid_registration_assigns_applicant_and_hashes_password(self):
         response = self.client.post(reverse("accounts:register"), {
             "first_name": "Maria", "last_name": "Santos", "username": "maria",
