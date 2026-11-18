@@ -11,6 +11,18 @@ def applicant_dashboard(request):
 
 
 @login_required
+@role_required("Applicant")
+def applicant_health_access(request):
+    return render(request, "dashboard/applicant_health_access.html")
+
+
+@login_required
+@role_required("Applicant")
+def applicant_qr_code(request):
+    return render(request, "dashboard/applicant_qr_code.html")
+
+
+@login_required
 @role_required("LGU_Staff")
 def lgu_dashboard(request):
     return render(request, "dashboard/lgu_dashboard.html")

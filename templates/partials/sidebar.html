@@ -5,9 +5,9 @@
 
   <p class="sidebar-section-label">Workspace</p>
   <nav class="sidebar-nav" aria-label="Main navigation">
-    <a class="sidebar-link{% if current_namespace == 'dashboard' %} is-active{% endif %}"
+    <a class="sidebar-link{% if current_namespace == 'dashboard' and current_route != 'applicant_health_access' and current_route != 'applicant_qr_code' %} is-active{% endif %}"
        href="{% url 'accounts:dashboard_redirect' %}"
-       {% if current_namespace == 'dashboard' %}aria-current="page"{% endif %}>
+       {% if current_namespace == 'dashboard' and current_route != 'applicant_health_access' and current_route != 'applicant_qr_code' %}aria-current="page"{% endif %}>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
       <span>Dashboard</span>
     </a>
@@ -16,6 +16,18 @@
        {% if current_namespace == 'accounts' and current_route == 'profile' %}aria-current="page"{% endif %}>
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
       <span>My profile</span>
+    </a>
+    <a class="sidebar-link{% if current_namespace == 'dashboard' and current_route == 'applicant_health_access' %} is-active{% endif %}"
+       href="{% url 'dashboard:applicant_health_access' %}"
+       {% if current_namespace == 'dashboard' and current_route == 'applicant_health_access' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.7-7 10-4.2-2.3-7-5.5-7-10V6l7-3Z"/><path d="M8.5 12h2l1.2-2.3 1.5 4.6 1.1-2.3h1.2"/></svg>
+      <span>Health Organization Access</span>
+    </a>
+    <a class="sidebar-link{% if current_namespace == 'dashboard' and current_route == 'applicant_qr_code' %} is-active{% endif %}"
+       href="{% url 'dashboard:applicant_qr_code' %}"
+       {% if current_namespace == 'dashboard' and current_route == 'applicant_qr_code' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/></svg>
+      <span>QR Code</span>
     </a>
   </nav>
 
