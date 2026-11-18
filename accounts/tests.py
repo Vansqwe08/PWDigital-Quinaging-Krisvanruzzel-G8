@@ -122,6 +122,34 @@ class LoginRoleAccessTests(AccountTestMixin, TestCase):
         response = self.client.get(reverse("dashboard:applicant"))
         self.assertRedirects(response, f"{reverse('accounts:login')}?next={reverse('dashboard:applicant')}")
 
+    def test_dashboards_distinguish_available_and_planned_features(self):
+        applicant = self.create_user("applicant")
+        lgu = self.create_user("lgu", "LGU_Staff")
+        partner = self.create_user("partner", "Partner")
+        admin = self.create_user("admin", "Admin")
+
+        self.client.force_login(applicant)
+        response = self.client.get(reverse("dashboard:applicant"))
+        self.assertContains(response, "Manage your profile")
+        self.assertContains(response, "not available yet")
+
+        for user, route in (
+            (lgu, "dashboard:lgu"),
+            (partner, "dashboard:partner"),
+        ):
+            with self.subTest(route=route):
+                self.client.force_login(user)
+                self.assertContains(
+                    self.client.get(reverse(route)),
+                    "not available in this phase",
+                )
+
+        self.client.force_login(admin)
+        self.assertContains(
+            self.client.get(reverse("dashboard:admin")),
+            "Available now",
+        )
+
 
 class ProfileTests(AccountTestMixin, TestCase):
     def test_view_update_duplicate_email_and_fields_cannot_change(self):

@@ -167,6 +167,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .form-group input::placeholder { color: #98a4b5; }
 .form-group input:focus, .form-group select:focus { border-color: var(--blue); outline: 3px solid #d5e6ff; }
 .form-help { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+.form-group [aria-invalid="true"] { border-color: var(--danger); }
 
 .button {
     min-height: 43px;
@@ -226,9 +227,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .dashboard-aside { padding: 24px; }
 .dashboard-aside h2 { margin: 0 0 12px; font-size: 17px; }
 .dashboard-aside p { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
-.status-label { display: flex; align-items: center; gap: 8px; color: var(--success); font-size: 13px; font-weight: 750; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #12b76a; }
+.availability-badge { width: fit-content; margin: 0 0 16px; padding: 5px 10px; display: block; border-radius: 999px; font-size: 12px; font-weight: 750; }
+.availability-active { background: #e7f6ef; color: var(--success); }
+.availability-planned { background: #fff5e5; color: #9a5b00; }
 .dashboard-aside .button { width: 100%; }
+.feature-list { display: grid; gap: 10px; margin: 0 0 20px; padding-left: 19px; color: #34445c; font-size: 14px; }
+.feature-list li::marker { color: var(--blue); }
+.capability-details { margin-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+.capability-details summary { padding-top: 15px; color: var(--blue-dark); font-weight: 700; cursor: pointer; }
+.capability-details summary:focus-visible { outline-offset: 4px; }
+.capability-details p { margin: 10px 0 0; }
 
 .profile-layout { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); align-items: start; gap: 22px; }
 .profile-summary, .profile-form-card { padding: 26px; }

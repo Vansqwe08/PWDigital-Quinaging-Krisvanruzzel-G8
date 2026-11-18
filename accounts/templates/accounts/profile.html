@@ -2,7 +2,7 @@
 {% block title %}My Profile | PWDigital{% endblock %}
 {% block content %}
 <section class="profile-layout">
-    <aside class="card profile-summary">
+    <aside class="card profile-summary" data-avatar-initial="{{ user.first_name|first|default:'U' }}">
         {% if user.profile_photo %}
             <img class="profile-photo" src="{{ user.profile_photo.url }}" alt="Profile photo">
         {% else %}
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {{ field }}
-                    {% if field.help_text %}<p class="form-help">{{ field.help_text }}</p>{% endif %}
+                    {% if field.help_text %}<p class="form-help" id="help-{{ field.id_for_label }}">{{ field.help_text }}</p>{% endif %}
                     {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
                 </div>
             {% endfor %}

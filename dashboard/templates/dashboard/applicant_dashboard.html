@@ -10,12 +10,19 @@
         <article class="card intro-card">
             <p class="eyebrow">Your PWDigital account</p>
             <h2>Your services start here.</h2>
-            <p>This phase provides secure account and profile management. PWD application submission and related features will be available in a future development phase.</p>
+            <p>Account and profile management are available in this phase. PWD application submission and related services are not available yet.</p>
         </article>
         <aside class="card dashboard-aside">
-            <h2>Keep your details current</h2>
-            <p>Review your contact information and profile photo to make sure your account is up to date.</p>
-            <a class="button button-primary" href="{% url 'accounts:profile' %}">View your profile</a>
+            <h2>Available in this phase</h2>
+            <ul class="feature-list">
+                <li>Update your contact details</li>
+                <li>Upload or change your profile photo</li>
+            </ul>
+            <a class="button button-primary" href="{% url 'accounts:profile' %}">Manage your profile</a>
+            <details class="capability-details">
+                <summary>What is coming later?</summary>
+                <p>PWD application submission and related services are not available in this phase.</p>
+            </details>
         </aside>
     </div>
 </section>

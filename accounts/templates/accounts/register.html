@@ -5,7 +5,7 @@
     <div class="auth-intro">
         <p class="portal-kicker">Get started</p>
         <h1>Create your PWDigital account.</h1>
-        <p>Set up your applicant account to access your profile and the services offered through the portal.</p>
+        <p>Create an applicant account to manage your contact details and profile photo.</p>
         <ul class="trust-list" aria-label="Registration information">
             <li><span class="trust-check" aria-hidden="true">&#10003;</span>Registration is for applicants</li>
             <li><span class="trust-check" aria-hidden="true">&#10003;</span>Your profile stays in your control</li>
@@ -21,6 +21,12 @@
                 <div class="form-group">
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {{ field }}
+                    {% if field.name == "password1" %}
+                        <p class="form-help">Use at least 8 characters. Common passwords and passwords similar to your account details are not accepted.</p>
+                    {% endif %}
+                    {% if field.name == "password2" %}
+                        <p class="form-help">Enter the same password again to confirm it.</p>
+                    {% endif %}
                     {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
                 </div>
             {% endfor %}

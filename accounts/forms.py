@@ -23,6 +23,15 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "username", "email", "mobile_number")
+        widgets = {
+            "first_name": forms.TextInput(attrs={"autocomplete": "given-name"}),
+            "last_name": forms.TextInput(attrs={"autocomplete": "family-name"}),
+            "username": forms.TextInput(attrs={"autocomplete": "username"}),
+            "email": forms.EmailInput(attrs={"autocomplete": "email"}),
+            "mobile_number": forms.TextInput(
+                attrs={"autocomplete": "tel", "inputmode": "tel"}
+            ),
+        }
 
     def clean_first_name(self):
         value = self.cleaned_data["first_name"].strip()
@@ -72,6 +81,26 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "mobile_number", "profile_photo")
+        widgets = {
+            "first_name": forms.TextInput(attrs={"autocomplete": "given-name"}),
+            "last_name": forms.TextInput(attrs={"autocomplete": "family-name"}),
+            "email": forms.EmailInput(attrs={"autocomplete": "email"}),
+            "mobile_number": forms.TextInput(
+                attrs={"autocomplete": "tel", "inputmode": "tel"}
+            ),
+            "profile_photo": forms.ClearableFileInput(
+                attrs={
+                    "accept": "image/*",
+                    "aria-describedby": "help-id_profile_photo",
+                }
+            ),
+        }
+        help_texts = {
+            "profile_photo": (
+                "Optional. Choose an image up to 2 MB, or leave this blank "
+                "to keep your current photo."
+            ),
+        }
 
     def clean_email(self):
         email = self.cleaned_data["email"].strip().lower()

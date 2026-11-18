@@ -14,8 +14,8 @@
         </div>
     {% else %}
         <div class="nav-actions">
-            <a href="{% url 'accounts:login' %}">Login</a>
-            <a class="button button-primary" href="{% url 'accounts:register' %}">Register</a>
+            <a class="{% if request.resolver_match.url_name == 'login' %}nav-current{% endif %}" href="{% url 'accounts:login' %}"{% if request.resolver_match.url_name == "login" %} aria-current="page"{% endif %}>Login</a>
+            <a class="button button-primary{% if request.resolver_match.url_name == 'register' %} nav-current{% endif %}" href="{% url 'accounts:register' %}"{% if request.resolver_match.url_name == "register" %} aria-current="page"{% endif %}>Register</a>
         </div>
     {% endif %}
 </nav>
