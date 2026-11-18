@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}LGU Dashboard | PWDigital{% endblock %}
+{% block content %}
+<section class="dashboard">
+    <header class="dashboard-header">
+        <div><p class="eyebrow">LGU / PDAO staff portal</p><h1>Welcome, {{ user.get_full_name|default:user.username }}</h1></div>
+        <span class="role-badge">LGU staff</span>
+    </header>
+    <div class="dashboard-grid">
+        <article class="card intro-card">
+            <p class="eyebrow">Staff workspace</p>
+            <h2>Application review</h2>
+            <p>Application review and management features will be added in a future development phase.</p>
+        </article>
+        <aside class="card dashboard-aside">
+            <h2>Account status</h2>
+            <p>Your staff portal is ready. More workspace tools will become available as features are added.</p>
+            <div class="status-label"><span class="status-dot" aria-hidden="true"></span>Signed in securely</div>
+        </aside>
+    </div>
+</section>
+{% endblock %}

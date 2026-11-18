@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}My Profile | PWDigital{% endblock %}
+{% block content %}
+<section class="profile-layout">
+    <aside class="card profile-summary">
+        {% if user.profile_photo %}
+            <img class="profile-photo" src="{{ user.profile_photo.url }}" alt="Profile photo">
+        {% else %}
+            <div class="profile-photo placeholder">{{ user.first_name|first|default:"U" }}</div>
+        {% endif %}
+        <h1>{{ user.get_full_name|default:user.username }}</h1>
+        <span class="role-badge">{{ user.role.role_name }}</span>
+        <dl>
+            <dt>Username</dt><dd>{{ user.username }}</dd>
+            <dt>Email address</dt><dd>{{ user.email }}</dd>
+            <dt>Member since</dt><dd>{{ user.created_at|date:"F j, Y" }}</dd>
+        </dl>
+    </aside>
+    <div class="card profile-form-card">
+        <h2>Personal information</h2>
+        <p>Keep your contact details up to date.</p>
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}<p class="form-help">{{ field.help_text }}</p>{% endif %}
+                    {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                </div>
+            {% endfor %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}<div class="field-error" role="alert">{{ error }}</div>{% endfor %}
+            {% endif %}
+            <button class="button button-primary" type="submit">Save changes</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

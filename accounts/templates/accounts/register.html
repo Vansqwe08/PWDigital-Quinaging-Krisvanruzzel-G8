@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Register | PWDigital{% endblock %}
+{% block content %}
+<section class="auth-layout">
+    <div class="auth-intro">
+        <p class="portal-kicker">Get started</p>
+        <h1>Create your PWDigital account.</h1>
+        <p>Set up your applicant account to access your profile and the services offered through the portal.</p>
+        <ul class="trust-list" aria-label="Registration information">
+            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Registration is for applicants</li>
+            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Your profile stays in your control</li>
+            <li><span class="trust-check" aria-hidden="true">&#10003;</span>Use a unique, secure password</li>
+        </ul>
+    </div>
+    <div class="card auth-card">
+        <h2>Create an account</h2>
+        <p class="muted">Enter your details to register as an applicant.</p>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                </div>
+            {% endfor %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}<div class="field-error" role="alert">{{ error }}</div>{% endfor %}
+            {% endif %}
+            <button class="button button-primary button-full" type="submit">Create applicant account</button>
+        </form>
+        <p class="auth-link">Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+    </div>
+</section>
+{% endblock %}

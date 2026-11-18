@@ -1,0 +1,21 @@
+<nav class="navbar" aria-label="Main navigation">
+    <a class="brand" href="{% if user.is_authenticated %}{% url 'accounts:dashboard_redirect' %}{% else %}{% url 'accounts:login' %}{% endif %}">
+        <span class="brand-mark">PWD</span>
+        <span>PWDigital</span>
+    </a>
+    {% if user.is_authenticated %}
+        <div class="nav-actions">
+            <span class="nav-identity">Signed in as {{ user.get_full_name|default:user.username }}</span>
+            <a class="{% if request.resolver_match.url_name == 'profile' %}nav-current{% endif %}" href="{% url 'accounts:profile' %}"{% if request.resolver_match.url_name == "profile" %} aria-current="page"{% endif %}>Profile</a>
+            <form method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+                <button class="button button-outline" type="submit">Logout</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="nav-actions">
+            <a href="{% url 'accounts:login' %}">Login</a>
+            <a class="button button-primary" href="{% url 'accounts:register' %}">Register</a>
+        </div>
+    {% endif %}
+</nav>

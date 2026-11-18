@@ -1,0 +1,25 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}PWDigital{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include "includes/navbar.html" %}
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <main id="main-content" class="page-container">
+        {% if messages %}
+            <div class="messages" aria-live="polite" aria-atomic="true">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="page-footer">PWDigital <span aria-hidden="true">&middot;</span> A digital PWD ID and verification portal</footer>
+</body>
+</html>

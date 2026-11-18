@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Partner Dashboard | PWDigital{% endblock %}
+{% block content %}
+<section class="dashboard">
+    <header class="dashboard-header">
+        <div><p class="eyebrow">Partner establishment portal</p><h1>Welcome, {{ user.get_full_name|default:user.username }}</h1></div>
+        <span class="role-badge">Partner</span>
+    </header>
+    <div class="dashboard-grid">
+        <article class="card intro-card">
+            <p class="eyebrow">Verification workspace</p>
+            <h2>Verification services</h2>
+            <p>QR verification features will be added in a future development phase.</p>
+        </article>
+        <aside class="card dashboard-aside">
+            <h2>Account status</h2>
+            <p>Your partner portal is ready. Verification tools will become available in a future development phase.</p>
+            <div class="status-label"><span class="status-dot" aria-hidden="true"></span>Signed in securely</div>
+        </aside>
+    </div>
+</section>
+{% endblock %}

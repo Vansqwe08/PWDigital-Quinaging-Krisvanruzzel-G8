@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Applicant Dashboard | PWDigital{% endblock %}
+{% block content %}
+<section class="dashboard">
+    <header class="dashboard-header">
+        <div><p class="eyebrow">Applicant portal</p><h1>Welcome, {{ user.get_full_name|default:user.username }}</h1></div>
+        <span class="role-badge">Applicant</span>
+    </header>
+    <div class="dashboard-grid">
+        <article class="card intro-card">
+            <p class="eyebrow">Your PWDigital account</p>
+            <h2>Your services start here.</h2>
+            <p>This phase provides secure account and profile management. PWD application submission and related features will be available in a future development phase.</p>
+        </article>
+        <aside class="card dashboard-aside">
+            <h2>Keep your details current</h2>
+            <p>Review your contact information and profile photo to make sure your account is up to date.</p>
+            <a class="button button-primary" href="{% url 'accounts:profile' %}">View your profile</a>
+        </aside>
+    </div>
+</section>
+{% endblock %}
